@@ -13,13 +13,12 @@ namespace MiMSharp.Lang.Lexer.Test.LexerTest
         public static void Main(string[] args)
         {
 
-            FileStream fs = new FileStream(Path.Combine(AppContext.BaseDirectory,"Test.txt"), FileMode.Open);
+            FileStream fs = new FileStream(Path.Combine(AppContext.BaseDirectory, "Test.txt"), FileMode.Open);
             using (fr = new StreamReader(fs))
             {
-                List<string> ids = new List<string>();
-                List<string> names = new List<string>();
-                List<string> operators = new List<string>();
-                List<int> numbers = new List<int>();
+                List<Tuple<string,string>> Ids = new List<Tuple<string,string>>();
+                List<Tuple<string,string>> Opereators  = new List<Tuple<string,string>>();
+                List<Tuple<string,int>> Numbers = new List<Tuple<string,int>>();
                 char readedChar = (char)fr.Read();
                 while (readedChar != '\uffff')
                 {
@@ -33,14 +32,11 @@ namespace MiMSharp.Lang.Lexer.Test.LexerTest
                                 word += readedChar;
                                 readedChar = (char)fr.Read();
                             }
-                            if (IsIdentifier(word: word))
-                                InsertId(ids: ids, id: word);
-                            else
-                                InsertName(names: names, name: word);
+                            Ids.Add(new Tuple<string, string>("ID",word));
                             break;
                         //For opertators
                         case char c when Regex.IsMatch(c.ToString(), "[+=*/-]"):
-                            operators.Add(c.ToString());
+                            Opereators.Add(new Tuple<string, string>("OP",c.ToString()));
                             readedChar = (char)fr.Read();
                             break;
                         //For numbers
@@ -51,43 +47,32 @@ namespace MiMSharp.Lang.Lexer.Test.LexerTest
                                 number += readedChar;
                                 readedChar = (char)fr.Read();
                             }
-                            numbers.Add(int.Parse(number));
+                            Numbers.Add(new Tuple<string, int>("NUM",int.Parse(number)));
                             break;
                         default:
                             readedChar = (char)fr.Read();
                             break;
                     }
-
-                }
-                foreach (string id in ids)
-                {
-                    Console.WriteLine("Found an identifier : " + id);
-                }
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("*********************************");
-                foreach (string name in names)
-                {
-                    Console.WriteLine("Found a name : " + name);
                 }
                 Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("*********************************");
-                foreach (string op in operators)
+                foreach (var item in Ids)
                 {
-                    Console.WriteLine("Found an operator : " + op);
+                    System.Console.WriteLine(item.Item1 +" : "+item.Item2);
                 }
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("*********************************");
-                foreach (int number in numbers)
+                Console.ForegroundColor = ConsoleColor.Green;
+                foreach (var item in Opereators)
                 {
-                    Console.WriteLine("Found a number : " + number);
+                    System.Console.WriteLine(item.Item1 +" : "+item.Item2);
+                }
+                Console.ForegroundColor = ConsoleColor.Red;
+                foreach (var item in Numbers)
+                {
+                    System.Console.WriteLine(item.Item1 +" : "+item.Item2);
                 }
             }
         }
-        public static bool IsIdentifier(string word) =>
-            word == Identifiers.defNumber ||
-            word == Identifiers.defString;
-        public static void InsertId(List<string> ids, string id) => ids.Add(id);
-
-        public static void InsertName(List<string> names, string name) => names.Add(name);
+        // public static bool IsIdentifier(string word) =>
+        //     word == Identifiers.defNumber ||
+        //     word == Identifiers.defString;
     }
 }
