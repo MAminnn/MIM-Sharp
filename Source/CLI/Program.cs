@@ -8,26 +8,24 @@ internal static class Program
     {
         var rootCommand = new RootCommand("MiM-Sharp: C# implementation of the MiM-Lang programming language");
 
-        var helpOption = new Option(
-            aliases: new[] { "-h", "--help" },
-            description: "Display this help message.",
-            arity: ArgumentArity.Zero
-        );
-
-        var fileArg = new Argument<FileInfo>(
+        var fileArg = new Argument<string>(
             name: "file-name",
             description: "The name of the file to run"
         );
 
         rootCommand.AddArgument(fileArg);
-        rootCommand.AddOption(helpOption);
 
-        rootCommand.SetHandler((FileInfo file, object help) =>
-            {
-                Console.WriteLine($"fileArg: {file}");
-                Console.WriteLine($"helpOption: {help}");
-            }, fileArg, helpOption
-        );
+        rootCommand.SetHandler((string fileName) => Execute(fileName), fileArg);
         rootCommand.Invoke(args);
+    }
+
+    private static void Execute(string fileName)
+    {
+        if (!File.Exists(fileName)) {
+            Console.WriteLine($"\u001b[31m\0file '{fileName}' does not exist.\u001b[0m");
+            return;
+        }
+
+        // call lexer
     }
 }
