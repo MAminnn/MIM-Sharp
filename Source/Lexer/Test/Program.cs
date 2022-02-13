@@ -41,7 +41,7 @@ namespace MiMSharp.Lang.Lexer.Test.LexerTest
                     int lastcol = 1;
                     while (readedChar != '\uffff')
                     {
-                        if (readedChar == '\n')
+                        if (readedChar == '\r')
                         {
 
                             line++;
@@ -99,7 +99,7 @@ namespace MiMSharp.Lang.Lexer.Test.LexerTest
                                 break;
 
                             default:
-                                if (readedChar != '\r')
+                                if (readedChar != '\n')
                                     throw new Exception($"Unknown syntax at {line}:{lastcol} ");
                                 else
                                     readedChar = (char)fr.Read();
