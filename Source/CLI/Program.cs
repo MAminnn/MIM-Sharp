@@ -1,4 +1,4 @@
-﻿namespace MiMSharp;
+﻿namespace MiMSharp.Lang.CLI;
 
 using System.CommandLine;
 
@@ -26,6 +26,7 @@ internal static class Program
             return;
         }
 
-        // call lexer
+        MiMSharp.Lang.Lexer.Lexer lexer = new Lang.Lexer.Lexer(fileName);
+        lexer.Lex();
     }
 }

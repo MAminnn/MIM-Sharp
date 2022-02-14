@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using MiMSharp.Lang.Lexer.Test.LexerTest.Interfaces;
 using System.Text.RegularExpressions;
 
-namespace MiMSharp.Lang.Lexer.Test.LexerTest
+namespace MiMSharp.Lang.Lexer
 {
 
     public class Program
