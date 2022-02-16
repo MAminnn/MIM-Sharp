@@ -9,10 +9,14 @@
 
   <ItemGroup>
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta3.22106.2" />
+    <Reference Include="Test">
+        <HintPath>$(ToolsDllPath)</HintPath>
+     </Reference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Lexer\Test\Test.csproj" />
-  </ItemGroup>
+  <PropertyGroup>
+     <!-- Default path to tools.dll -->
+     <ToolsDllPath Condition="'$(ToolsDllPath)'==''">O:\Developing\Projects\Productions\MIM-Sharp\MiM-Sharp\MIM-Sharp\Source\Lexer\Test\bin\Debug\net5.0\Test.dll</ToolsDllPath>
+  </PropertyGroup>
 
 </Project>

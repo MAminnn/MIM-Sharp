@@ -22,12 +22,33 @@ internal static class Program
 
     private static void Execute(string fileName)
     {
-        if (!File.Exists(fileName)) {
+        if (!File.Exists(fileName))
+        {
             Console.WriteLine($"\u001b[31m\0file '{fileName}' does not exist.\u001b[0m");
             return;
         }
 
-        Lexer lexer = new Lexer(fileName);
-        lexer.Lex();
+        Lexer lexer = new Lexer(Path.Combine(AppContext.BaseDirectory, "Test.txt"));
+        IEnumerable<IToken> Tokens = lexer.Lex();
+
+        foreach (IToken token in Tokens)
+        {
+            switch (token)
+            {
+                case Keyword:
+                    System.Console.WriteLine($"Found a Keyword at {token.Line}:{token.Column} => {token.Value}");
+                    break;
+                case Identifier:
+                    System.Console.WriteLine($"Found an Identifier at {token.Line}:{token.Column} => {token.Value}");
+                    break;
+                case Val:
+                    System.Console.WriteLine($"Found a Value at {token.Line}:{token.Column} => {token.Value} | Type: {((Val)token).Type}");
+                    break;
+                case Operator:
+                    System.Console.WriteLine($"Found an Operator at {token.Line}:{token.Column} => {token.Value}");
+                    break;
+            }
+
+        }
     }
 }

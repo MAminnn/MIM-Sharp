@@ -8,7 +8,6 @@ namespace MiMSharp.Lang.Lexer
 
     public class Program
     {
-
         public static void Main(string[] args)
         {
             Lexer lexer = new Lexer(Path.Combine(AppContext.BaseDirectory, "Test.txt"));
