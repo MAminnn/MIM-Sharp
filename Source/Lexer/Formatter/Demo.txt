@@ -1,3 +1,4 @@
 decn amin = 12 
 decn amin = 12 
 decn amin = 12 
+decstr demo = 3 * 23 / 2 + 123 - 31

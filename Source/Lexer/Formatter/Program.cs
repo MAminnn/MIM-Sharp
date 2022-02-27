@@ -16,13 +16,11 @@ namespace MiMSharp.Lang.Lexer
                     {
                         row = row.TrimStart(' ');
                     }
-                    if (row.Contains("="))
-                    {
-                        while (!row.Contains(" = "))
-                        {
-                            row = row.Replace("="," = ");
-                        }
-                    }
+                    row = OpFormat(row, "*");
+                    row = OpFormat(row, "+");
+                    row = OpFormat(row, "-");
+                    row = OpFormat(row, "/");
+                    row = OpFormat(row, "=");
                     while (row.Contains("  ") || row.Contains("   "))
                     {
                         row = row.Replace("  ", " ");
@@ -38,6 +36,17 @@ namespace MiMSharp.Lang.Lexer
                     writer.WriteLine(line);
                 }
             }
+        }
+        static string OpFormat(string row, string op)
+        {
+            if (row.Contains(op))
+            {
+                while (!row.Contains(" " + op + " "))
+                {
+                    row = row.Replace(op, " " + op + " ");
+                }
+            }
+            return row;
         }
     }
 }
